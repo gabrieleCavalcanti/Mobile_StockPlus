@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
     color: '#EAE0CB',
     opacity: 0.8,
   },
-});
+})
