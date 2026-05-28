@@ -10,32 +10,32 @@ export default function HomeScreen() {
   const navigation = useNavigation<NavigationProps>();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.bg}>
       
-      <View style={styles.header}>
-        <Text style={styles.appTitle}>StockPlus</Text> 
-        <Text style={styles.welcomeText}>Painel de Controle</Text>
+      <View style={styles.topo}>
+        <Text style={styles.logo}>StockPlus</Text> 
+        <Text style={styles.sub}>Painel de Controle</Text>
       </View>
 
-      <View style={styles.menuContainer}>
+      <View style={styles.grade}>
         
         <TouchableOpacity 
           style={styles.card} 
           onPress={() => navigation.navigate('Movimentacoes')}
         >
-          <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>Movimentações</Text>
-            <Text style={styles.cardSubtitle}>Histórico de entradas e saídas</Text>
+          <View style={styles.bloco}>
+            <Text style={styles.titulo}>Movimentações</Text>
+            <Text style={styles.detalhe}>Histórico de entradas e saídas</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity 
-          style={[styles.card, styles.cardAlert]} 
+          style={[styles.card, styles.alerta]} 
           onPress={() => navigation.navigate('ProdutosQtd')}
         >
-          <View style={styles.cardContent}>
-            <Text style={[styles.cardTitle, styles.textAlert]}>Estoque Baixo</Text>
-            <Text style={[styles.cardSubtitle, styles.textAlertSecondary]}>Produtos atingindo o limite mínimo</Text>
+          <View style={styles.bloco}>
+            <Text style={[styles.titulo, styles.txtAlerta]}>Estoque Baixo</Text>
+            <Text style={[styles.detalhe, styles.txtAlertaSub]}>Produtos atingindo o limite mínimo</Text>
           </View>
         </TouchableOpacity>
 
@@ -43,9 +43,9 @@ export default function HomeScreen() {
           style={styles.card} 
           onPress={() => navigation.navigate('ProdutosVenc')}
         >
-          <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>Vencimentos</Text>
-            <Text style={styles.cardSubtitle}>Alertas de validade de produtos</Text>
+          <View style={styles.bloco}>
+            <Text style={styles.titulo}>Vencimentos</Text>
+            <Text style={styles.detalhe}>Alertas de validade de produtos</Text>
           </View>
         </TouchableOpacity>
 
@@ -55,17 +55,17 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  bg: {
     flex: 1,
     backgroundColor: '#310E10', 
     paddingHorizontal: 24,
   },
-  header: {
+  topo: {
     marginTop: 40,
     marginBottom: 30,
     alignItems: 'center',
   },
-  appTitle: {
+  logo: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#EAE0CB',
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     textTransform: 'uppercase',
   },
-  welcomeText: {
+  sub: {
     fontSize: 20,
     fontWeight: '600',
     color: '#F4E3B2',
     marginTop: 16,
   },
-  menuContainer: {
+  grade: {
     gap: 16, 
   },
   card: {
@@ -92,26 +92,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(234, 224, 203, 0.1)', 
   },
-  cardAlert: {
+  alerta: {
     backgroundColor: '#74070E', 
   },
-  cardContent: {
+  bloco: {
     flexDirection: 'column',
   },
-  cardTitle: {
+  titulo: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#310E10', 
   },
-  cardSubtitle: {
+  detalhe: {
     fontSize: 13,
     color: '#EAE0CB', 
     marginTop: 4,
   },
-  textAlert: {//
+  txtAlerta: {
     color: '#F4E3B2', 
   },
-  textAlertSecondary: {
+  txtAlertaSub: {
     color: '#EAE0CB',
     opacity: 0.8,
   },

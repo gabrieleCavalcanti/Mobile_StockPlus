@@ -53,56 +53,56 @@ export default function MovimentacoesScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.bg}>
       
-      <View style={styles.searchContainer}>
+      <View style={styles.buscaBox}>
         <TextInput 
-          style={styles.searchInput}
+          style={styles.input}
           placeholder="Buscar por status, produto ou nome..."
           placeholderTextColor="#947268"
           value={search}
           onChangeText={(text) => setSearch(text)}
         />
-        <Text style={styles.searchIcon}>🔍</Text>
+        <Text style={styles.icone}>🔍</Text>
       </View>
 
       <FlatList
         data={dadosFiltrados}
         keyExtractor={(item) => item.id_movimentacao.toString()}
-        contentContainerStyle={styles.listContainer}
+        contentContainerStyle={styles.lista}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          <Text style={styles.emptyText}>Nenhum registro encontrado.</Text>
+          <Text style={styles.vazio}>Nenhum registro encontrado.</Text>
         }
         renderItem={({ item }) => {
           const valorTotal = item.quantidade * item.preco_unitario;
 
           return (
             <View style={styles.card}>
-              <View style={[styles.statusIndicator, { backgroundColor: getStatusColor(item.status) }]} />
+              <View style={[styles.barra, { backgroundColor: getStatusColor(item.status) }]} />
               
-              <View style={styles.cardTextContainer}>
-                <Text style={styles.cardTitle} numberOfLines={1}>
+              <View style={styles.info}>
+                <Text style={styles.status} numberOfLines={1}>
                   {formatStatusLabel(item.status)}
                 </Text>
                 
-                <Text style={styles.cardInvolvedName} numberOfLines={1}>
+                <Text style={styles.nome} numberOfLines={1}>
                   {item.status === "ENTRADA" ? item.fornecedor : item.cliente}
                 </Text>
                 
-                <Text style={styles.cardProduct} numberOfLines={1}>{item.nome_produto}</Text>
+                <Text style={styles.produto} numberOfLines={1}>{item.nome_produto}</Text>
                 
-                <Text style={styles.cardValues}>
+                <Text style={styles.unitario}>
                   Val. Unit: {formatMoeda(item.preco_unitario)}
                 </Text>
               </View>
 
-              <View style={styles.rightContainer}>
-                <Text style={[styles.quantityText, { color: getStatusColor(item.status) }]}>
-                  {getSignal(item.status)}{item.quantidade} <Text style={styles.quantityLabel}>unid.</Text>
+              <View style={styles.direita}>
+                <Text style={[styles.qtd, { color: getStatusColor(item.status) }]}>
+                  {getSignal(item.status)}{item.quantidade} <Text style={styles.unid}>unid.</Text>
                 </Text>
                 
-                <Text style={styles.totalText}>
+                <Text style={styles.total}>
                   Total: {formatMoeda(valorTotal)}
                 </Text>
               </View>
@@ -115,12 +115,12 @@ export default function MovimentacoesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  bg: {
     flex: 1,
     backgroundColor: '#EAE0CB', 
     paddingHorizontal: 24,
   },
-  searchContainer: {
+  buscaBox: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#F4E3B2',
@@ -135,16 +135,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
-  searchInput: {
+  input: {
     flex: 1,
     color: '#310E10',
     fontSize: 16,
   },
-  searchIcon: {
+  icone: {
     fontSize: 16,
     color: '#310E10',
   },
-  listContainer: {
+  lista: {
     gap: 16,
     paddingBottom: 24,
   },
@@ -161,63 +161,63 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     paddingVertical: 14,
   },
-  statusIndicator: {
+  barra: {
     width: 14, 
     position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
   },
-  cardTextContainer: {
+  info: {
     flex: 1,
     justifyContent: 'center',
     paddingLeft: 34, 
     paddingRight: 10,
   },
-  cardTitle: {
+  status: {
     fontSize: 22, 
     fontWeight: 'bold',
     color: '#310E10', 
     textTransform: 'lowercase',
     marginBottom: 2,
   },
-  cardInvolvedName: {
+  nome: {
     fontSize: 13,
     fontWeight: '600', 
     color: '#45462A',
   },
-  cardProduct: {
+  produto: {
     fontSize: 13,
     color: '#310E10', 
     marginTop: 2,
   },
-  cardValues: {
+  unitario: {
     fontSize: 11,
     color: '#947268',
     marginTop: 4,
   },
-  rightContainer: {
+  direita: {
     justifyContent: 'center',
     alignItems: 'flex-end',
     paddingRight: 16,
     minWidth: 120, 
   },
-  quantityText: {
+  qtd: {
     fontSize: 16,
     fontWeight: 'bold',
   },
-  quantityLabel: {
+  unid: {
     fontSize: 11,
     color: '#45462A',
     fontWeight: 'normal',
   },
-  totalText: {
+  total: {
     fontSize: 12,
     fontWeight: '700',
     color: '#310E10',
     marginTop: 6,
   },
-  emptyText: {
+  vazio: {
     textAlign: 'center',
     color: '#947268',
     marginTop: 40,
