@@ -1,211 +1,74 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, KeyboardAvoidingView, Platform } from "react-native";
-import { usuarios } from "../../Data/usuarios";
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, KeyboardAvoidingView, Platform} from "react-native";
 import { useState } from "react";
-import api from "../../api/api";
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../App";
 import { useNavigation } from "@react-navigation/native";
-import { } from "react-native";
+import {  } from "react-native";
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, "Login">;
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProps>();
 
-  // const [email, setEmail] = useState("");
-  // const [senha, setSenha] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  // function entrar() {
-
-  //   if (!email.trim()) {
-  //     return Alert.alert("Erro", "Email é obrigatório");
-  //   }
-
-  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  //   if (!emailRegex.test(email)) {
-  //     return Alert.alert("Erro", "Email inválido");
-  //   }
-
-  //   if (!senha.trim()) {
-  //     return Alert.alert("Erro", "Senha é obrigatória");
-  //   }
-
-  //   const usuarioEncontrado = usuarios.find(
-  //     (usuario) =>
-  //       usuario.email === email &&
-  //       usuario.senha === senha
-  //   );
-
-  //   if (!usuarioEncontrado) {
-  //     return Alert.alert(
-  //       "Erro",
-  //       "Email ou senha inválidos"
-  //     );
-  //   }
-
-  //   Alert.alert(
-  //     "Sucesso",
-  //     `Bem-vindo ${usuarioEncontrado.nome}`
-  //   );
-
-  //   navigation.navigate("Home");
-  // }
-  //
-  // async function entrar() {
-  //   try {
-
-  //     const response = await api.post(
-  //       "/auth/login",
-  //       {
-  //         username,
-  //         password: senha
-  //       }
-  //     );
-
-  //     const token =
-  //       response.data.data.token_acesso;
-
-  //     console.log(token);
-
-  //     Alert.alert(
-  //       "Sucesso",
-  //       "Login realizado com sucesso"
-  //     );
-
-  //     navigation.navigate("Home");
-
-  //   } catch (error: any) {
-
-  //     Alert.alert(
-  //       "Erro",
-  //       error.response?.data?.message ||
-  //       "Falha no login"
-  //     );
-
-  //   }
-  // }
-
-  async function entrar() {
-
-    if (!username.trim()) {
-      return Alert.alert(
-        "Erro",
-        "Usuário é obrigatório"
-      );
-    }
-
-    if (!senha.trim()) {
-      return Alert.alert(
-        "Erro",
-        "Senha é obrigatória"
-      );
-    }
-
-    try {
-      const response = await api.post(
-        "/auth/login",
-        {
-          username,
-          password: senha
-        }
-      );
-
-      const token = response.data.data.token_acesso;
-
-      const respostaProtegida = await api.get(
-        "/auth/rotaProtegida",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-
-      console.log(respostaProtegida.data);
-
-      console.log("TOKEN:", token);
-
-      Alert.alert(
-        "Sucesso",
-        "Login realizado com sucesso"
-      );
-
-      navigation.navigate("Home");
-
-    } catch (error: any) {
-
-      console.log(error.response?.data);
-
-      console.log(error.response?.data);
-
-      if (error.response?.status === 401) {
-        return Alert.alert(
-          "Sessão inválida",
-          "Seu token é inválido ou expirou. Faça login novamente."
-        );
-      }
-
-      Alert.alert(
-        "Erro",
-        error.response?.data?.message ||
-        "Falha no login"
-      );
-    }
+  function entrar() {
+    Alert.alert("Login", "Login realizado com sucesso!");
+    navigation.navigate("Home");
   }
 
   return (
+    // <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
 
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+        <Text style={styles.titulo}>LOGIN</Text>
 
-      <Text style={styles.titulo}>LOGIN</Text>
+        <View style={styles.card}>
 
-      <View style={styles.card}>
+          <View style={styles.campo}>
+            <Text style={styles.label}>Email:</Text>
 
-        <View style={styles.campo}>
-          <Text style={styles.label}>Usuário:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Insira o email"
+              value={email}
+              onChangeText={setEmail}
+            />
+          </View>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Usuário"
-            value={username}
-            onChangeText={setUsername}
-          />
+          <View style={styles.campo}>
+            <Text style={styles.label}>Senha:</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Insira a senha"
+              secureTextEntry
+              value={senha}
+              onChangeText={setSenha}
+            />
+          </View>
+
+          <TouchableOpacity
+            style={styles.botao}
+            onPress={entrar}
+          >
+            <Text style={styles.textoBotao}>ENTRAR</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Cadastro")}
+          >
+            <Text style={styles.novo}>NOVO</Text>
+          </TouchableOpacity>
+
         </View>
-
-        <View style={styles.campo}>
-          <Text style={styles.label}>Senha:</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Insira a senha"
-            secureTextEntry
-            value={senha}
-            onChangeText={setSenha}
-          />
-        </View>
-
-        <TouchableOpacity
-          style={styles.botao}
-          onPress={entrar}
-        >
-          <Text style={styles.textoBotao}>ENTRAR</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Cadastro")}
-        >
-          <Text style={styles.novo}>NOVO</Text>
-        </TouchableOpacity>
-
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    // </View>
 
   );
 }

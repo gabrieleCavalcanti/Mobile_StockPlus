@@ -2,8 +2,6 @@ import api from "../../api/api";
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, KeyboardAvoidingView, Platform, } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-import { usuarios } from "../../Data/usuarios";
-
 import { useState } from "react";
 
 export default function CadastroScreen() {
