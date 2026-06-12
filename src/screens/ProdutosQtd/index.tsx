@@ -27,16 +27,16 @@ export default function ProdutosQtdScreen() {
 
   async function carregarDados() {
     try {
-      // 🔹 1. Busca estoque baixo
+      // Busca estoque baixo
       const estoqueResponse = await api.get<EstoqueBaixo[]>("estoque/baixo");
 
-      // 🔹 2. Busca produtos
+      // Busca produtos
       const produtosResponse = await api.get("produtos");
 
       const listaProdutos: Produto[] =
         produtosResponse.data?.resultadoSelecionaTodos ?? [];
 
-      // 🔹 3. Junta produto + estoque
+      // Junta produto + estoque
       const combinados: ProdutoComEstoque[] = estoqueResponse.data.map(
         (estoque) => {
           const produto = listaProdutos.find(
